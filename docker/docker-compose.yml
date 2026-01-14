@@ -35,35 +35,47 @@ services:
 #для запуска в терминале пишем docker-compose up. в нужной дерриктории
 
 
-  kafka:
-    image: apache/kafka:4.1.0
-    container_name: kafka
+#  kafka:
+#    image: apache/kafka:4.1.0
+#    container_name: kafka
+#    ports:
+#      - "9092:9092"
+#    environment:
+#      # Идентификатор узла (уникальный для каждого брокера)
+#      KAFKA_NODE_ID: 1
+#
+#      # Роли узла: этот контейнер будет и брокером, и контроллером (KRaft)
+#      KAFKA_PROCESS_ROLES: 'broker,controller'
+#
+#      # Настройка слушателей
+#      KAFKA_LISTENERS: 'PLAINTEXT://:9092,CONTROLLER://:9093'
+#      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://localhost:9092'
+#      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
+#      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+#
+#      # Безопасность (в данном примере без шифрования)
+#      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT'
+#
+#      # Настройка кворума контроллеров (для одного узла указываем его же)
+#      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka:9093'
+#
+#      # Идентификатор кластера (обязателен для KRaft)
+#      # Можно сгенерировать свой или использовать этот пример
+#      KAFKA_CLUSTER_ID: 'SoG-sqADSYmdOm3zSP8OWA'
+#
+#      # Отключаем использование ZooKeeper (в 4.x это поведение по умолчанию)
+#      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+#      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+#      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
     ports:
-      - "9092:9092"
-    environment:
-      # Идентификатор узла (уникальный для каждого брокера)
-      KAFKA_NODE_ID: 1
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
 
-      # Роли узла: этот контейнер будет и брокером, и контроллером (KRaft)
-      KAFKA_PROCESS_ROLES: 'broker,controller'
-
-      # Настройка слушателей
-      KAFKA_LISTENERS: 'PLAINTEXT://:9092,CONTROLLER://:9093'
-      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://localhost:9092'
-      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
-      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
-
-      # Безопасность (в данном примере без шифрования)
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT'
-
-      # Настройка кворума контроллеров (для одного узла указываем его же)
-      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka:9093'
-
-      # Идентификатор кластера (обязателен для KRaft)
-      # Можно сгенерировать свой или использовать этот пример
-      KAFKA_CLUSTER_ID: 'SoG-sqADSYmdOm3zSP8OWA'
-
-      # Отключаем использование ZooKeeper (в 4.x это поведение по умолчанию)
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+volumes:
+  mongo-data:

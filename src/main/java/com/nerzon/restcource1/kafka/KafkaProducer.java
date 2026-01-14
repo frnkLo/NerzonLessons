@@ -4,17 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-@Service
-public class KafkaProducer {
-
-    @Autowired // сервис kafkProducer связывается с значением ниже
-    private final KafkaTemplate<String, String> kafkaTemplate; //это значение предоставляет нам спринг
-
-    public KafkaProducer(KafkaTemplate<String, String> kafkaTemplate) {
-        this.kafkaTemplate = kafkaTemplate; //конструктор-параметр
-    }
-
-    public void sendMessage(String message) {
-        kafkaTemplate.send("course", message); //указываем топик, куда отправляем
-    }
-}
+//@Service
+//public class KafkaProducer {
+//
+//    @Autowired // сервис kafkProducer связывается с значением ниже
+//    private final KafkaTemplate<String, String> kafkaTemplate; //это значение предоставляет нам спринг
+//
+//    public KafkaProducer(KafkaTemplate<String, String> kafkaTemplate) {
+//        this.kafkaTemplate = kafkaTemplate; //конструктор-параметр
+//    }
+//
+//    public void sendMessage(String message) {
+//        kafkaTemplate.send("course", message); //указываем топик, куда отправляем
+//    }
+//}
