@@ -4,12 +4,14 @@ package com.nerzon.restcource1.controller;
 import com.nerzon.restcource1.DTO.CatDTO;
 import com.nerzon.restcource1.entity.Cat;
 import com.nerzon.restcource1.repository.CatRepo;
+import com.nerzon.restcource1.service.MailSenderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
 import org.springframework.web.bind.annotation.*;
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.ObjectMapper;
@@ -27,6 +29,7 @@ public class MainController {
     //Jackson - библиотека, которая работает с сериализацией и десериализацией json объектов
     private final CatRepo catRepo;
     //private final ObjectMapper objectMapper;
+    private final MailSenderService mailSender;
 
 
     @Operation(
@@ -111,5 +114,21 @@ public class MainController {
 //
 //        return jsonData;
 //    }
+
+    @GetMapping("/hello")
+    public void sayHelloFromCat(@RequestParam int id) {
+        var cat = catRepo.findById(id).orElseThrow(); //orElseThrow для того чтоб не обрабатывать ошибку
+        mailSender.sendMail(
+                "rock-with-me@yandex.ru",
+                "Hello From " + cat.getName(),
+                "mew mew mew. My name is " + cat.getName()
+        );
+
+        mailSender.sendMail(
+                "i.nmchk@ya.ru",
+                "Hello From " + cat.getName(),
+                "mew mew mew. My name is " + cat.getName()
+        );
+    }
 
 }
