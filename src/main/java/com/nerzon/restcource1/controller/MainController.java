@@ -34,16 +34,24 @@ public class MainController {
             description = "Получает DTO кота и билдером собирает и сохраняет сущность в базу" //подробное описание метода
     ) //нужна для более подробного описания метода в swagger. Есть и другие свойста помимо этих двух
     @PostMapping("/api/add")
-    public void addCat(@RequestBody CatDTO catDTO) { //аннотация нужна для сериализации
+    public Cat addCat(@RequestBody CatDTO catDTO) { //аннотация нужна для сериализации
 
-        log.info(
-                "New row: " + catRepo.save(
+        return catRepo.save(
                         Cat.builder()
                             .age(catDTO.getAge())
                             .weight(catDTO.getWeight())
                             .name(catDTO.getName())
-                            .build())
-        ); //собираем инфу о коте из переданной дто контейнера в данные
+                            .build()
+        );
+
+//        log.info(
+//                "New row: " + catRepo.save(
+//                        Cat.builder()
+//                            .age(catDTO.getAge())
+//                            .weight(catDTO.getWeight())
+//                            .name(catDTO.getName())
+//                            .build())
+//        ); //собираем инфу о коте из переданной дто контейнера в данные
     }
 
     @SneakyThrows //заставляет исключение выбросить без обработки
